@@ -17,14 +17,19 @@ clean: ## Clean the temporary files.
 
 .PHONY: format
 format:  ## Format the code.
-	{{ package_manager }} run black .
 	{{ package_manager }} run ruff check . --fix
+	{{ package_manager }} run ruff format .
 
 .PHONY: lint
-lint:  ## Run all linters (black/ruff/pylint/mypy).
-	{{ package_manager }} run black --check .
+lint:  ## Run all linters (ruff/mypy/bandit).
 	{{ package_manager }} run ruff check .
+	{{ package_manager }} run ruff format --check .
 	make mypy
+	make security-scan
+
+.PHONY: security-scan
+security-scan:  ## Run security scanning with bandit.
+	{{ package_manager }} run bandit -c pyproject.toml -r {{ module_name }}/
 
 .PHONY: test
 test:  ## Run the tests and check coverage.
