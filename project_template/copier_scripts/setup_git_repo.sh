@@ -80,7 +80,7 @@ if [[ $(git status --porcelain) ]] && create_repo; then
             gh pr create \
                 --base "$DEFAULT_BRANCH" \
                 --title "Update contents from base template" \
-                --body "Automated pull request to update repo contents from https://github.com/ONSdigital/ons-python-template" \
+                --body "Automated pull request to update repo contents from https://github.com/ONS-innovation/ons-python-template-min" \
                 2>&1
         ); then
             warn "$status"
