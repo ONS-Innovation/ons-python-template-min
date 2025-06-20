@@ -1,8 +1,6 @@
 {%- import 'macros.jinja' as macros with context -%}
 # {{ repository_name }}
 
-[![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/mega-linter.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/mega-linter.yml)
---> {%- if is_public_repo %}
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml) {%- if is_public_repo %}
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml)
 {%- endif %}
@@ -12,31 +10,6 @@
 [![Security: Bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 [![{{ package_manager }}-managed](https://img.shields.io/badge/{{ package_manager }}-managed-blue)]({{ macros.package_manager_url() }})
 [![License - MIT](https://img.shields.io/badge/licence%20-MIT-1ac403.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/blob/main/LICENSE)
-
----
-
-## Quick Setup: Enable MegaLinter CI
-
-This repository includes a pre-configured MegaLinter workflow for automated code quality checks, but it needs to be manually enabled:
-
-**To activate MegaLinter:**
-
-1. Rename [.github/mega-linter.yml.example](.github/mega-linter.yml.example) to `.github/mega-linter.yml`
-2. Move the file from [.github](.github) to the [.github/workflows](.github/workflows) folder
-3. Commit and push the change
-
-**Why this step is needed:**
-GitHub Actions security restrictions prevent automatic creation of workflow files during template initialisation.
-Learn more about [GitHub Token permissions and workflow limitations](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token).
-
-Once enabled, MegaLinter will automatically run on all Pull Requests and commits to `main`, checking:
-
-- Python code quality (Ruff, Black, Pylint, MyPy)
-- GitHub Actions workflows
-- Documentation formatting
-- Shell scripts, Dockerfiles, and more
-
----
 
 {{ repository_description }}
 
@@ -172,29 +145,17 @@ To auto-format the Python code and correct fixable linting issues, run:
 make format
 ```
 
-#### MegaLinter (Lint/Format non-python files)
-
-[MegaLinter](https://github.com/oxsecurity/megalinter) is utilised to lint the non-python files in the project.
-It offers a single interface to execute a suite of linters for multiple languages and formats, ensuring adherence to
-best practices and maintaining consistency across the repository without the need to install each linter individually.
 To run security scanning specifically, run:
 
-MegaLinter examines various file types and tools, including GitHub Actions, Shell scripts, Dockerfile, etc. It is
-configured using the `.mega-linter.yml` file.
-
-To run MegaLinter, ensure you have **Docker** installed on your system.
 ```bash
 make security-scan
 ```
 
-> Note: The initial run may take some time to download the Docker image. However, subsequent executions will be
-> considerably faster due to Docker caching. :rocket:
 #### Pre-commit Hooks
 
 The project includes pre-commit hooks to automatically run linting, formatting, and security checks before each commit. To set up pre-commit hooks:
 
 ```bash
-make megalint
 pip install pre-commit
 pre-commit install
 ```

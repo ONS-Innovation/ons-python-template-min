@@ -177,9 +177,6 @@ JSON_BRANCH_PROTECTION_CONFIG=$(
                 "context": "Lint and Test"
             },
             {
-                "context": "MegaLinter"
-            },
-            {
                 "context": "Analyze (python)"
             }
         ]

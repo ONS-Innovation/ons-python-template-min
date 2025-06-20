@@ -3,6 +3,10 @@
 # For most projects, this workflow file will not need changing; you simply need
 # to commit it to your repository.
 #
+# If you have GitHub's default CodeQL setup enabled, you should disable it
+# in your repository settings to avoid conflicts with this workflow.
+# Go to: Settings > Code security and analysis > Code scanning > CodeQL analysis > Disable
+#
 # You may wish to alter this file to override the set of languages analyzed,
 # or to provide custom queries or build logic.
 name: CodeQL
@@ -13,7 +17,6 @@ on: # yamllint disable-line rule:truthy
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [main]
-
   schedule:
     # Run on a daily interval at 12pm UTC
     - cron: "0 12 * * *"
@@ -30,6 +33,9 @@ jobs:
     permissions:
       # required for all workflows
       security-events: write
+      # additional permissions for better compatibility
+      actions: read
+      contents: read
 
     strategy:
       fail-fast: false
@@ -59,7 +65,7 @@ jobs:
 
           # For more details on CodeQL's query packs, refer to:
           # https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-          # queries: security-extended,security-and-quality
+          queries: security-extended,security-and-quality
           setup-python-dependencies: false
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, or Java).
