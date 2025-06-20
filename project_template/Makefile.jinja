@@ -28,7 +28,7 @@ lint:  ## Run all linters (ruff/mypy/bandit).
 
 .PHONY: security-scan
 security-scan:  ## Run security scanning with bandit.
-	{{ package_manager }} run bandit -c pyproject.toml -r {{ module_name }}/
+	{{ package_manager }} run bandit -c pyproject.toml -r {{ module_name }}/ --no-write
 
 .PHONY: test
 test:  ## Run the tests and check coverage.
